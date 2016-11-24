@@ -1,5 +1,5 @@
 const net = require('net')
-const log = require('../log')
+const log = require('../logger')
 
 const HOST = '127.0.0.1'
 const PORT = 6969
