@@ -1,4 +1,5 @@
 const net = require('net')
+const log = require('../log')
 
 const HOST = '127.0.0.1'
 const PORT = 6969
@@ -6,15 +7,15 @@ const PORT = 6969
 const client = new net.Socket()
 
 client.connect(PORT, HOST, () => {
-  console.log('CONNECTED TO: ' + HOST + ':' + PORT)
+  log.connected('CONNECTED', `${HOST}:${PORT}`)
 })
 
 client.on('data', data => {
-  console.log('DATA: ' + data)
+  log.data('DATA', data)
 })
 
 client.on('close', () => {
-  console.log('Connection closed')
+  log.closed('CLOSED')
 })
 
-client.write([5,2,1])
+client.write('Hello server')

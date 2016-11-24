@@ -1,29 +1,25 @@
 const net = require('net')
+const log = require('../log')
 
 const host = '127.0.0.1'
 const port = 6969
 
 const server = net.createServer(socket => {
-  console.log(`CONNECTED: ${getSocketAddress(socket)}`)
+  log.connected('CONNECTED', getSocketAddress(socket))
 
   socket.on('data', data => {
-    console.log(`DATA ${getSocketAddress(socket)} ${data}`)
+    log.data('DATA', `${getSocketAddress(socket)} ${data}`)
 
-    const result = data.reduce((a, b) => a + b, 0)
-
-    socket.end(result)
+    socket.end('Hasta la vista, baby')
   })
 
   socket.on('close', data => {
-    console.log(`CLOSED: ${getSocketAddress(socket)}`)
+    log.closed('CLOSED', getSocketAddress(socket))
   })
-}).on('error', err => {
-  throw err
 })
 
-
 server.listen({ host, port }, () => {
-  console.log(`Server listening on ${getServerAddress(server)}`)
+  log.info('Server listening', getServerAddress(server))
 })
 
 function getSocketAddress(socket) {
