@@ -10,7 +10,7 @@ const server = net.createServer(socket => {
   socket.on('data', data => {
     log.data('DATA', `${getSocketAddress(socket)} ${data}`)
 
-    socket.end(`${new Function('return ' + data)()}`)
+    socket.write(`${new Function('return ' + data)()}`)
   })
 
   socket.on('close', data => {
