@@ -60,7 +60,7 @@ const server = net.createServer(socket => {
 server.listen({ host, port }, () => {
   log.info('Server listening', getServerAddress(server))
 
-  random = getRandomIntInclusive(1, 10)
+  random = getRandomIntInclusive(1, 100)
 
   console.log(random)
 })
