@@ -4,7 +4,7 @@ const log = require('../logger')
 const host = '127.0.0.1'
 const port = 6969
 
-const sockets = []
+let sockets = []
 
 let random
 
@@ -36,10 +36,12 @@ const server = net.createServer(socket => {
         msg: 'You guessed it!'
       }))
 
-      sockets.map(socket => socket.end(JSON.stringify({
-        type: 'end',
-        msg: 'Game Over'
-      })))
+      sockets.map(socket => {
+        return socket.end(JSON.stringify({
+          type: 'end',
+          msg: 'Game Over'
+        }))
+      })
 
       return server.close()
     }
@@ -52,6 +54,8 @@ const server = net.createServer(socket => {
 
   socket.on('close', data => {
     log.closed('CLOSED', getSocketAddress(socket))
+
+    sockets = sockets.filter(s => getSocketAddress(s) !== getSocketAddress(socket))
   })
 
   sockets.push(socket)
